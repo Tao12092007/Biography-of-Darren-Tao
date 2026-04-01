@@ -221,15 +221,15 @@ const About = () => (
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1 }}
-        className="relative aspect-[4/5] rounded-[2rem] overflow-hidden grayscale hover:grayscale-0 transition-all duration-1000 group"
+        className="relative aspect-[4/5] rounded-[2rem] overflow-hidden group"
       >
         <img 
-          src="https://picsum.photos/seed/darren/800/1000" 
+          src="https://picsum.photos/seed/darren-tao/800/1000" 
           alt="Darren Tao" 
           className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
           referrerPolicy="no-referrer"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
       </motion.div>
     </div>
 

@@ -26,9 +26,17 @@ db.exec(`
     title TEXT NOT NULL,
     description TEXT,
     link TEXT,
-    tags TEXT
+    tags TEXT,
+    image TEXT
   );
 `);
+
+// Ensure 'image' column exists in 'projects' table (for existing databases)
+try {
+  db.exec("ALTER TABLE projects ADD COLUMN image TEXT");
+} catch (e) {
+  // Column might already exist, ignore error
+}
 
 // Seed data if empty
 // Seed data if empty or missing specific posts
@@ -70,16 +78,19 @@ if (postTitles.includes(englishPost.title)) {
 const existingProjects = db.prepare("SELECT title FROM projects").all() as { title: string }[];
 const projectTitles = existingProjects.map(p => p.title);
 
-const insertProject = db.prepare("INSERT INTO projects (title, description, link, tags) VALUES (?, ?, ?, ?)");
+const insertProject = db.prepare("INSERT INTO projects (title, description, link, tags, image) VALUES (?, ?, ?, ?, ?)");
 
 if (!projectTitles.includes("Personal Portfolio")) {
-  insertProject.run("Personal Portfolio", "A minimalist portfolio built with React and Tailwind.", "#", "React, Tailwind, SQLite");
+  insertProject.run("Personal Portfolio", "A minimalist portfolio built with React and Tailwind.", "#", "React, Tailwind, SQLite", "https://picsum.photos/seed/portfolio/800/600");
 }
 if (!projectTitles.includes("School Documentary")) {
-  insertProject.run("School Documentary", "Documentary Project for my school's Practical exam.", "#", "Video, Documentary, School Project");
+  insertProject.run("School Documentary", "Documentary Project for my school's Practical exam.", "#", "Video, Documentary, School Project", "https://picsum.photos/seed/doc/800/600");
 }
 if (!projectTitles.includes("Gaming Community Hub")) {
-  insertProject.run("Gaming Community Hub", "A concept for a local gaming community platform.", "#", "Design, Community");
+  insertProject.run("Gaming Community Hub", "A concept for a local gaming community platform.", "#", "Design, Community", "https://picsum.photos/seed/gaming/800/600");
+}
+if (!projectTitles.includes("Culinary Photography")) {
+  insertProject.run("Culinary Photography", "Capturing the art of food and dining experiences.", "#", "Photography, Culinary", "https://ais-dev-rhp4priwxi4o7tigutfcth-30817385084.asia-east1.run.app/api/placeholder/fried-rice.jpg");
 }
 
 async function startServer() {
